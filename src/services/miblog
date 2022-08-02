@@ -1,0 +1,49 @@
+const db = require('./db');
+const helper = require('../helper');
+const config = require('../config');
+
+async function getMultiple(page = 1){
+  const offset = helper.getOffSet(page, config.listPerPage);
+  const rows = await db.query(
+    `
+    SELECT id, title, released_year, description, content
+    FROM posts LIMIT ${offset},${config.listPerPage}
+    `
+  );
+
+  const data = helper.emptyOrRows(rows);
+  const meta = {page};
+
+  return {
+    data,
+    meta
+  }
+}
+
+// async function create(miblog){
+//   const result = await db.query(
+//     `INSERT INTO posts (title, description, content) VALUES ("${miblog.title}", "${miblog.description}", "${miblog.content}")
+//     `
+//   );
+
+//   let message = 'Error in creating posts';
+
+//   if(result.affectedRows){
+//     message = 'Post created successfully';
+//   }
+
+//   return(message);
+// }
+
+// async function update(id, miblog){
+//   const result = await db.query(
+//     `UPDATE miblog
+//     SET title="${miblog.title}", "${}"
+//     `
+//   )
+// }
+
+module.exports = {
+  getMultiple,
+  // create
+}
