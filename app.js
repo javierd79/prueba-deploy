@@ -3,6 +3,7 @@ const { restart } = require('nodemon');
 const app = express();
 const port = 3000;
 const postsRouter = require('./src/routes/posts');
+const morgan = require('morgan');
 
 app.use(express.json());
 
@@ -13,10 +14,17 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.json({ message: "ok" });
+  res.json({ message: "Hello World" });
 });
 
 app.use("/posts", postsRouter);
+
+app.get('/*', (req, res) => {
+  res.json({ message: "Not found" });
+});
+
+app.use(morgan('tiny'));
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

@@ -1,11 +1,10 @@
 const config = { 
   db: {
     host: 'localhost',
-    user: 'javier',
-    password: '',
+    user: 'root',
+    password: 'mypassword',
     database: 'urbedb',
-  },
-  listPerPage: 10,
+  }
 };
 
 module.exports = config;
